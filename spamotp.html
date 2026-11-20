@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTP Shield Panel</title>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: #08090d;
+  color: white;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+.container {
+  max-width: 420px;
+  margin: auto;
+}
+.header {
+  background: #15151d;
+  border: 1px solid #292936;
+  padding: 22px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 0 15px #ff174433;
+}
+.header h2 {
+  color: #ff334f;
+  letter-spacing: 2px;
+}
+.header p {
+  color: #999;
+  margin-top: 8px;
+  font-size: 12px;
+}
+.card {
+  background: #15151d;
+  border: 1px solid #292936;
+  border-radius: 13px;
+  padding: 18px;
+  margin-top: 18px;
+}
+.card h3 {
+  font-size: 15px;
+  margin-bottom: 15px;
+  color: #ff5369;
+}
+input {
+  width: 100%;
+  padding: 14px;
+  background: #090a10;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: white;
+  margin-bottom: 12px;
+  outline: none;
+}
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #ff2948;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:active {
+  transform: scale(.98);
+}
+.status {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-top: 12px;
+}
+.green {
+  color: #00e89a;
+}
+.log {
+  color: #aaa;
+  font-size: 12px;
+  line-height: 2;
+}
+.footer {
+  text-align: center;
+  color: #555;
+  font-size: 11px;
+  margin-top: 25px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h2>OTP SHIELD</h2>
+  <p>SECURITY TESTING DASHBOARD</p>
+</div>
+
+<div class="card">
+  <h3>STATUS SISTEM</h3>
+  <div class="status">
+    <span>Perlindungan</span>
+    <b class="green">● AKTIF</b>
+  </div>
+  <div class="status">
+    <span>Mode</span>
+    <b>SIMULASI</b>
+  </div>
+</div>
+
+<div class="card">
+  <h3>OTP RATE LIMIT TEST</h3>
+  <input id="nomor" type="tel"
+  placeholder="Nomor uji milik sendiri">
+  <input id="batas" type="number"
+  placeholder="Batas percobaan (maks. 10)"
+  min="1" max="10">
+  <button onclick="mulaiTes()">
+    MULAI SIMULASI
+  </button>
+  <p id="hasil" class="log"
+  style="margin-top:15px">
+    Menunggu pengujian...
+  </p>
+</div>
+
+<div class="card">
+  <h3>AKTIVITAS SISTEM</h3>
+  <div id="log" class="log">
+    [SYSTEM] Panel berhasil dimuat<br>
+    [SYSTEM] Mode simulasi aktif<br>
+    [SYSTEM] Menunggu perintah...
+  </div>
+</div>
+
+<div class="footer">
+  OTP SHIELD v1.0 • SECURITY PANEL
+</div>
+
+</div>
+
+<script>
+function mulaiTes() {
+  const nomor = document.getElementById("nomor").value;
+  const batas = Number(document.getElementById("batas").value);
+  const hasil = document.getElementById("hasil");
+  const log = document.getElementById("log");
+
+  if (!nomor || !batas || batas < 1 || batas > 10) {
+    hasil.innerText = "Masukkan nomor uji dan batas 1-10.";
+    return;
+  }
+
+  hasil.innerText = "Pengujian simulasi berjalan...";
+  log.innerHTML += "<br>[TEST] Simulasi dimulai";
+
+  let percobaan = 0;
+  const timer = setInterval(() => {
+    percobaan++;
+
+    log.innerHTML += "<br>[TEST] Percobaan " + percobaan;
+
+    if (percobaan >= batas) {
+      clearInterval(timer);
+      hasil.innerText =
+        "Simulasi selesai. Batas percobaan: " + batas;
+      log.innerHTML += "<br>[SYSTEM] Simulasi selesai";
+    }
+  }, 700);
+}
+</script>
+</body>
+</html>
